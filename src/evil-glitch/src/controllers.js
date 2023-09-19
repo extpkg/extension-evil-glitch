@@ -22,19 +22,6 @@ function shareFacebook(){
   var link = encodeURIComponent(locationref)+'&description='+encodeURIComponent(baseMessage());
   window.open('https://www.facebook.com/sharer/sharer.php?u='+link);
 }
-var fullscreen = false;
-function toggleFullscreen(evt){
-  if (document.fullscreenEnabled) {
-    fullscreen?document.exitFullscreen():document.body.requestFullscreen();
-  } else if (document['webkitFullscreenEnabled']) {
-    fullscreen?document.webkitExitFullscreen():document.body.webkitRequestFullscreen();
-  } else if (document.mozFullScreenEnabled) {
-    fullscreen?document.mozCancelFullScreen():document.body.mozRequestFullScreen();
-  }
-  fullscreen=!fullscreen;
-  evt.preventDefault();
-}
-document.getElementById('f').onclick=toggleFullscreen;
 
 function getRandomValue(value, offset){
   return Math.random()*(value||1) + (offset||0);
