@@ -1,5 +1,5 @@
 {
-  "name": "devil-glitches",
+  "name": "extention-devil-glitches",
   "version": "0.0.1",
   "description": "glitches are invading our world, help the guardian to keep it free",
   "main": "index.js",
@@ -8,7 +8,6 @@
     "compileglsl": "./scripts/compileglsfiles.sh src/shaders build",
     "concat": "./scripts/concat.sh > build/build.js",
     "uglify": "uglifyjs build/build.js -c -m -o build/build.min.js",
-    "minify": "minify build/build.js > build/build.min.js",
     "nominify": "cp build/build.js build/build.min.js",
     "gen": "cp src/index.html target/index.html && cp build/build.min.js target/b.js",
     "build-nominify": "npm run clean && npm run compileglsl && npm run concat && npm run nominify && npm run gen",
@@ -18,27 +17,14 @@
     "liveserver": "mkdir -p target; cd target; live-server",
     "start": "npm run watch & npm run liveserver"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/agar3s/devil-glitches.git"
-  },
-  "keywords": [
-    "js13k"
-  ],
-  "author": "Agar3s",
+  "author": "EXT, Inc.",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/agar3s/devil-glitches/issues"
-  },
-  "homepage": "https://github.com/agar3s/devil-glitches#readme",
   "devDependencies": {
     "glslmin": "0.0.0",
     "nodemon": "^1.10.0",
-    "uglifyjs": "^2.4.10",
     "wr": "^1.3.1"
   },
   "dependencies": {
-    "minify": "^10.5.2",
     "uglify-js": "^3.17.4"
   }
 }
