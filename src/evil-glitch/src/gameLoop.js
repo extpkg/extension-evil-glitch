@@ -282,7 +282,6 @@ function draw(t){
     }
     if(newRecord){
       displayWord('-new record-', 400, 240,22, [10,18]);
-      displayWord('-share it-', 400, 400,14, [24,18]);
     }else{
       displayWord('game over', 400, 240,20, [0,13]);
     }

@@ -80,7 +80,7 @@ function drawSplash(){
     //displayWord('glitch', 400, 310+fade*50,20*(1+fade), [0,1,0]); 
   }
 
-  displayWord('made by agar3s', 401, 520,9, [0,10]);
+  displayWord('made by ext inc.', 401, 520,9, [0,10]);
 
   ctx.closePath();
   ctx.fill();

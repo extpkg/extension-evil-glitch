@@ -172,7 +172,7 @@ function init(){
   sequence2.stop();
   sequence3.stop();
   sequence4.stop();
-  record = parseFloat(storage.getItem('agar3sjs13k-record')||0);
+  record = parseFloat(storage.getItem('evilGlitch-record')||0);
   for (var i = 0; buttons&&i < buttons.length; i++) {
     buttons[i][3] = false;
   }

@@ -11,8 +11,8 @@ var colors = [
 'rgba(7,8,12,0.2)',// 8f corruption background
 'rgb(40,145,160)',//9f bullet color
 '#F66', //10 button start again
-'#69F', //11 button twitter
-'#32F', //12 button facebook
+'#69F', //11 button twitter (button removed, no usage)
+'#32F', //12 button facebook (button removed, no usage)
 '#6FF',  //13 button fire to start& controls
 '#066',  //14 stroke line buttons
 '#0FF', //15 hit enemy strokeline
