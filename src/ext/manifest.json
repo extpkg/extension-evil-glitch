@@ -1,0 +1,40 @@
+{
+	"manifest_version": "ext-v1",
+	"name": "Devil Glitch",
+	"version": "1.0.7",
+	"short_name": "Devil Glitch",
+	"description": "Glitches are invading our world, help the guardian to keep it free.",
+	"author": "EXT, Inc.",
+	"homepage_url": "https://github.com/agar3s/devil-glitches",
+	"icons": {
+		"128": "icons/icon-128.png",
+		"background": "icons/icon-background.png",
+		"banner": "icons/icon-banner.png"
+	},
+	"scripts": [
+		"main.js"
+	],
+	"modules": {
+		"console": {
+			"module_version": "1.0.1"
+		},
+		"runtime": {
+			"module_version": "1.2.1"
+		},
+		"tabs": {
+			"module_version": "1.1.0"
+		},
+		"windows": {
+			"module_version": "1.1.0"
+		},
+		"webviews": {
+			"module_version": "1.0.2"
+		},
+		"websessions": {
+			"module_version": "1.0.1",
+			"optional_permissions": [
+				"create.persistent"
+			]
+		}
+	}
+}

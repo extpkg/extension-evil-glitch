@@ -1,6 +1,8 @@
 #!/bin/bash
 # original script from @gre 
 # https://github.com/gre/behind-asteroids/blob/master/scripts/concat.sh
+cd ./src/evil-glitch
+
 cat src/pre.js
 
 if [ "$NODE_ENV" == "production" ]; then
