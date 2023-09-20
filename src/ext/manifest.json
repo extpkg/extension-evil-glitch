@@ -1,8 +1,8 @@
 {
 	"manifest_version": "ext-v1",
-	"name": "Devil Glitch",
+	"name": "Evil Glitch",
 	"version": "1.0.7",
-	"short_name": "Devil Glitch",
+	"short_name": "Evil Glitch",
 	"description": "Glitches are invading our world, help the guardian to keep it free.",
 	"author": "EXT, Inc.",
 	"homepage_url": "https://github.com/agar3s/devil-glitches",

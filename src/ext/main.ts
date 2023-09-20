@@ -20,7 +20,7 @@ ext.runtime.onExtensionClick.addListener(async () => {
     // Create tab
     tab = await ext.tabs.create({
       icon: 'icons/icon-128.png',
-      text: 'Devil Glitch',
+      text: 'Evil Glitch',
       muted: false,
       mutable: true,
       closable: true,
@@ -28,7 +28,7 @@ ext.runtime.onExtensionClick.addListener(async () => {
 
     // Create window
     window = await ext.windows.create({
-      title: 'Devil Glitch',
+      title: 'Evil Glitch',
       icon: 'icons/icon-128.png',
       fullscreenable: true,
       vibrancy: false,
