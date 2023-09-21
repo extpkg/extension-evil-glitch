@@ -5,6 +5,7 @@ let created = false
 let tab: ext.tabs.Tab | null = null
 let window: ext.windows.Window | null = null
 let webview: ext.webviews.Webview | null = null
+let websession: ext.websessions.Websession | null = null
 
 // Extension clicked
 ext.runtime.onExtensionClick.addListener(async () => {
@@ -35,8 +36,19 @@ ext.runtime.onExtensionClick.addListener(async () => {
       frame: true,
     })
 
+    // Check if persistent permission is granted
+    const permissions = await ext.runtime.getPermissions()
+    const persistent = (permissions['websessions'] ?? {})['create.persistent']?.granted ?? false
+
+    // Create websession
+    websession = await ext.websessions.create({
+      partition: 'Evil Glitch',
+      persistent: persistent,
+      global: false,
+    })    
+
     // Create webview
-    webview = await ext.webviews.create()
+    webview = await ext.webviews.create({ websession: websession })
     const size = await ext.windows.getContentSize(window.id)
     await ext.webviews.loadFile(webview.id, 'target/index.html')
     await ext.webviews.attach(webview.id, window.id)

@@ -21,7 +21,7 @@ function randomGlitch(){
 function toggleControls(){
   play(heroSpeedUp);
   controlHelp = !controlHelp;
-  buttons[1][3] = !controlHelp;
-  buttons[3][3] = !controlHelp&&godModeAvailable;
-  buttons[2][5] = controlHelp?'go back':'controls';
+  buttons[2][3] = !controlHelp;
+  buttons[4][3] = !controlHelp&&godModeAvailable;
+  buttons[3][5] = controlHelp?'go back':'controls';
 }

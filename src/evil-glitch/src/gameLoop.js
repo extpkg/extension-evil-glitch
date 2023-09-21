@@ -12,6 +12,7 @@ function die(killer){
   sequence3.stop();
   sequence4.stop();
   buttons[0][3] = true;
+  buttons[1][3] = true;
   t = dt*30;
   checkRecord();
   frame=0;

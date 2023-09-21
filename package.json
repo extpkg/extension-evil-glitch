@@ -3,19 +3,9 @@
   "version": "0.0.1",
   "description": "glitches are invading our world, help the guardian to keep it free",
   "scripts": {
-    "clean": "rm -rf ./src/evil-glitch/build/; mkdir -p ./src/evil-glitch/build ./dist/target",
-    "compileglsl": "./src/evil-glitch/scripts/compileglsfiles.sh ./src/evil-glitch/src/shaders ./src/evil-glitch/build",
-    "concat": "./src/evil-glitch/scripts/concat.sh > ./src/evil-glitch/build/build.js",
-    "uglify": "uglifyjs ./src/evil-glitch/build/build.js -c -m -o ./src/evil-glitch/build/build.min.js",
-    "nominify": "cp ./src/evil-glitch/build/build.js ./src/evil-glitch/build/build.min.js",
-    "gen": "cp ./src/evil-glitch/src/index.html dist/target/index.html && cp ./src/evil-glitch/build/build.min.js dist/target/b.js",
-    "build-nominify": "npm run clean && npm run compileglsl && npm run concat && npm run nominify && npm run gen",
-    "zip": "cd dist; zip -r ../dist.zip .; cd ..; wc -c dist.zip",
     "build": "webpack --mode=production --node-env=production",
-    "postbuild": "export NODE_ENV=production; npm run clean && npm run compileglsl && npm run concat && npm run uglify && npm run gen && npm run zip",
-    "watch": "npm run build-nominify; wr 'npm run build-nominify' ./src/evil-glitch/src/ ./src/evil-glitch/scripts/",
-    "liveserver": "mkdir -p dist/target; cd dist/target; live-server",
-    "start": "npm run watch & npm run liveserver",
+    "postbuild": "gulp build-release",
+    "start": "gulp",
     "lint": "eslint ."
   },
   "author": "EXT, Inc.",
@@ -27,18 +17,20 @@
     "@extpkg/types-websessions": "^1.0.1",
     "@extpkg/types-webviews": "^1.0.2",
     "@extpkg/types-windows": "^1.1.0",
-    "copy-webpack-plugin": "^11.0.0",
-    "eslint": "^8.48.0",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "eslint": "^8.48.0",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-glsl": "^1.2.4",
+    "gulp-terser": "^2.1.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-webserver": "^0.9.1",
     "ts-loader": "^9.4.4",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "glslmin": "0.0.0",
-    "wr": "^1.3.1"
-  },
-  "dependencies": {
-    "uglify-js": "^3.17.4"
+    "webpack-cli": "^5.1.4"
   }
 }
