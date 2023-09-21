@@ -72,19 +72,19 @@ gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
   1.0,  1.0
 ]), gl.STATIC_DRAW);
 
-var glowShader = glCreateShader(STATIC_VERT, GLOW_FRAG);
+var glowShader = glCreateShader(STATIC, GLOW);
 gl.uniform2f(glUniformLocation(glowShader, 'dim'), W, H);
-var crtShader = glCreateShader(STATIC_VERT, CRT_FRAG);
+var crtShader = glCreateShader(STATIC, CRT);
 gl.uniform2f(glUniformLocation(crtShader, 'dim'), W, H);
-var badColorShader = glCreateShader(STATIC_VERT, BADCOLOR_FRAG);
+var badColorShader = glCreateShader(STATIC, BADCOLOR);
 gl.uniform2f(glUniformLocation(badColorShader, 'dim'), W, H);
-var cutShader = glCreateShader(STATIC_VERT, CUT_FRAG);
+var cutShader = glCreateShader(STATIC, CUT);
 gl.uniform2f(glUniformLocation(cutShader, 'dim'), W, H);
-var twistShader = glCreateShader(STATIC_VERT, TWIST_FRAG);
+var twistShader = glCreateShader(STATIC, TWIST);
 gl.uniform2f(glUniformLocation(twistShader, 'dim'), W, H);
-var swellShader = glCreateShader(STATIC_VERT, SWELL_FRAG);
+var swellShader = glCreateShader(STATIC, SWELL);
 gl.uniform2f(glUniformLocation(swellShader, 'dim'), W, H);
-var slitShader = glCreateShader(STATIC_VERT, SLIT_FRAG);
+var slitShader = glCreateShader(STATIC, SLIT);
 gl.uniform2f(glUniformLocation(slitShader, 'dim'), W, H);
 
 
