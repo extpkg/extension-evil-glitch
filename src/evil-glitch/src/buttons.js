@@ -1,5 +1,6 @@
 // x, y, width, visible, color, message, clicked, hover, action 
 var buttons = [[250,320,300, false,10, 'start again',false, false, startGame],
+               [250,380,300, false,13, 'back to menu', false, false, backToMenu],
                [240,380,320, true,13, 'fire to start', false, false, startGame],
                [280,440,240, true,13, 'controls', false, false, toggleControls],
                [280,130,240, godModeAvailable,16,'evil mode', false, false, startGodMode]];

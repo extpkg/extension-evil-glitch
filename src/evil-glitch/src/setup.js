@@ -52,6 +52,10 @@ document.oncontextmenu = function (e) {
   e.preventDefault();
 };
 
+s.style.width = c.clientWidth;
+window.addEventListener('resize', () => {
+  s.style.width = c.clientWidth;
+})
 
 // WebGL setup
 gl.viewport(0, 0, W, H);
