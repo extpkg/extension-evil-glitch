@@ -38,8 +38,7 @@ var gl = c.getContext('webgl',glprops) || c.getContext('experimental-webgl', glp
   glitchTime = 0,
   frame=0,
   GLITCHS=[0,0,0,0,0,0,0],
-  godMode = false,
-  godModeAvailable = !!storage.getItem('evilGlitch-gm'),
+  godMode = !!storage.getItem('evilGlitch-gm'),
   startFromGodMode = false;
 // DOM setup 
 d.style.webkitTransformOrigin = d.style.transformOrigin = "0 0";
