@@ -22,6 +22,6 @@ function toggleControls(){
   play(heroSpeedUp);
   controlHelp = !controlHelp;
   buttons[2][3] = !controlHelp;
-  buttons[4][3] = !controlHelp&&godModeAvailable;
+  buttons[4][3] = !controlHelp&&godMode;
   buttons[3][5] = controlHelp?'go back':'controls';
 }

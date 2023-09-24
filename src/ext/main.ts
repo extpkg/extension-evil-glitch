@@ -54,6 +54,7 @@ ext.runtime.onExtensionClick.addListener(async () => {
     await ext.webviews.attach(webview.id, window.id)
     await ext.webviews.setBounds(webview.id, { x: 0, y: 0, width: size.width, height: size.height })
     await ext.webviews.setAutoResize(webview.id, { width: true, height: true })
+    await ext.webviews.focus(webview.id)
 
     // Mark window as created
     created = true
@@ -90,9 +91,10 @@ ext.tabs.onClicked.addListener(async (event) => {
   try {
 
     // Restore & Focus window
-    if (event.id === tab?.id && window !== null) {
+    if (event.id === tab?.id && window !== null && webview !== null) {
       await ext.windows.restore(window.id)
       await ext.windows.focus(window.id)
+      await ext.webviews.focus(webview.id)
     }
 
   } catch (error) {

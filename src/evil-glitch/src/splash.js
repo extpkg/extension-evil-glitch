@@ -107,12 +107,11 @@ function backToMenu() {
 
   buttons[2][3] = "true";
   buttons[3][3] = "true";
-  buttons[4][3] = godModeAvailable;;
+  buttons[4][3] = godMode;;
 }
 
 function startGodMode(){
   startFromGodMode = true;
-  godMode = true;
   startGame();
 }
 init();
