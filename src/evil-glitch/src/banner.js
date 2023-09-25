@@ -83,7 +83,7 @@ function updateEnds(){
     storage.setItem('evilGlitch-gm', 'qyui');
     loadGod();
   }
-  endBannerCounter += 10;
+  endBannerCounter++;
 }
 function drawBannerEnds(){
   if(endBannerCounter<300)return;

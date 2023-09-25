@@ -107,7 +107,7 @@ function backToMenu() {
 
   buttons[2][3] = "true";
   buttons[3][3] = "true";
-  buttons[4][3] = godMode;;
+  buttons[4][3] = godMode;
 }
 
 function startGodMode(){
