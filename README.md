@@ -12,5 +12,4 @@ The game is a 2D arcade shoot-'em-up, with retro aesthetics inspired by 80's med
 1. Clone the repository
 2. Run `npm install` to install node dependencies
 3. Run `npm run build` to build the extension
-4. Copy the `dist.zip` file into EXT
-```
+4. Copy the `dist` folder into EXT
