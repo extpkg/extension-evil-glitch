@@ -35,8 +35,11 @@ ext.runtime.onExtensionClick.addListener(async () => {
       vibrancy: false,
       frame: false,
       titleBarStyle: 'inset',
+      width: 910,
+      height: 650,
       minWidth: 700,
-      minHeight: 500
+      minHeight: 500,
+      aspectRatio: 700 / 500
     })
 
     // Check if persistent permission is granted
