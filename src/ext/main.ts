@@ -1,189 +1,160 @@
-// Evil Glitch EXT extension
+type Instance = {
+  tabId: string;
+  windowId: string;
+  websessionId: string;
+  webviewId: string;
+};
 
-// Global resources
-let created = false
-let tab: ext.tabs.Tab | null = null
-let window: ext.windows.Window | null = null
-let webview: ext.webviews.Webview | null = null
-let websession: ext.websessions.Websession | null = null
+let instance: Instance | null = null;
+let lock = false;
 
-// Extension clicked
+const title = "Evil Glitch";
+
+const focusInstance = async () => {
+  if (instance) {
+    await ext.windows.restore(instance.windowId);
+    await ext.windows.focus(instance.windowId);
+  }
+};
+
+const destroyInstance = async () => {
+  if (instance) {
+    await ext.webviews.remove(instance.webviewId);
+    await ext.websessions.remove(instance.websessionId);
+    await ext.windows.remove(instance.windowId);
+    await ext.tabs.remove(instance.tabId);
+    instance = null;
+  }
+};
+
 ext.runtime.onExtensionClick.addListener(async () => {
+  if (instance || lock) {
+    await focusInstance();
+    return;
+  }
+
+  lock = true;
+
+  let tab: ext.tabs.Tab | null = null;
+  let window: ext.windows.Window | null = null;
+  let websession: ext.websessions.Websession | null = null;
+  let webview: ext.webviews.Webview | null = null;
+
   try {
-
-    // Check if window already exists
-    if (created && window !== null) {
-      await ext.windows.restore(window.id)
-      await ext.windows.focus(window.id)
-      return
-    }
-
-    // Create tab
     tab = await ext.tabs.create({
-      icon: 'icons/icon-128.png',
-      text: 'Evil Glitch',
-      muted: false,
+      text: title,
+      icon: "./assets/128.png",
       mutable: true,
-      closable: true,
-    })
+    });
 
-    // Create window
     window = await ext.windows.create({
-      title: 'Evil Glitch',
-      icon: 'icons/icon-128.png',
-      fullscreenable: true,
+      center: true,
+      title,
+      icon: "./assets/128.png",
+      fullscreenable: false,
+      maximizable: false,
+      darkMode: true,
       vibrancy: false,
       frame: false,
-      titleBarStyle: 'inset',
-      width: 910,
-      height: 650,
-      minWidth: 700,
-      minHeight: 500,
-      aspectRatio: 700 / 500
-    })
+      titleBarStyle: "inset",
+      width: 800,
+      height: 600,
+      minWidth: 800,
+      aspectRatio: 4 / 3,
+    });
 
-    // Check if persistent permission is granted
-    const permissions = await ext.runtime.getPermissions()
-    const persistent = (permissions['websessions'] ?? {})['create.persistent']?.granted ?? false
+    const contentSize = await ext.windows.getContentSize(window.id);
 
-    // Create websession
+    const permissions = await ext.runtime.getPermissions();
+    const persistent =
+      (permissions["websessions"] ?? {})["create.persistent"]?.granted ?? false;
+
     websession = await ext.websessions.create({
-      partition: 'Evil Glitch',
-      persistent: persistent,
+      partition: title,
+      persistent,
       global: false,
-    })    
+    });
+    webview = await ext.webviews.create({
+      window,
+      websession,
+      autoResize: { horizontal: true, vertical: true },
+      bounds: { ...contentSize, x: 0, y: 0 },
+    });
 
-    // Create webview
-    webview = await ext.webviews.create({ websession: websession })
-    const size = await ext.windows.getContentSize(window.id)
-    await ext.webviews.loadFile(webview.id, 'target/index.html')
-    await ext.webviews.attach(webview.id, window.id)
-    await ext.webviews.setBounds(webview.id, { x: 0, y: 0, width: size.width, height: size.height })
-    await ext.webviews.setAutoResize(webview.id, { width: true, height: true })
-    await ext.webviews.focus(webview.id)
+    await ext.webviews.loadFile(webview.id, "index.html");
+    // await ext.webviews.openDevTools(webview.id, {
+    //   mode: "detach",
+    //   activate: true,
+    // });
 
-    // Mark window as created
-    created = true
+    await ext.windows.focus(window.id);
+    await ext.webviews.focus(webview.id);
 
+    instance = {
+      tabId: tab.id,
+      windowId: window.id,
+      websessionId: websession.id,
+      webviewId: webview.id,
+    };
+    lock = false;
   } catch (error) {
+    console.error("ext.runtime.onExtensionClick", JSON.stringify(error));
 
-    // Print error
-    console.error('ext.runtime.onExtensionClick', JSON.stringify(error))
-
+    if (window) await ext.windows.remove(window.id);
+    if (tab) await ext.tabs.remove(tab.id);
+    if (websession) await ext.websessions.remove(websession.id);
+    if (webview) await ext.webviews.remove(webview.id);
   }
-})
+});
 
-// Tab was removed by another extension
-ext.tabs.onRemoved.addListener(async (event) => {
+ext.tabs.onClicked.addListener(async () => {
   try {
-
-    // Remove objects
-    if (event.id === tab?.id) {
-      if (window !== null) await ext.windows.remove(window.id)
-      if (webview !== null) await ext.webviews.remove(webview.id)
-      tab = window = webview = null
-    }
-
+    await focusInstance();
   } catch (error) {
-
-    // Print error
-    console.error('ext.tabs.onRemoved', JSON.stringify(error))
-
+    console.log(error, "ext.tabs.onClicked");
   }
-})
+});
 
-// Tab was clicked
-ext.tabs.onClicked.addListener(async (event) => {
+ext.tabs.onClickedMute.addListener(async () => {
   try {
-
-    // Restore & Focus window
-    if (event.id === tab?.id && window !== null && webview !== null) {
-      await ext.windows.restore(window.id)
-      await ext.windows.focus(window.id)
-      await ext.webviews.focus(webview.id)
+    if (instance) {
+      const muted = await ext.webviews.isAudioMuted(instance.webviewId);
+      await ext.webviews.setAudioMuted(instance.webviewId, !muted);
+      await ext.tabs.update(instance.tabId, { muted: !muted });
     }
-
   } catch (error) {
-
-    // Print error
-    console.error('ext.tabs.onClicked', JSON.stringify(error))
-
+    console.log(error, "ext.tabs.onClickedMute");
   }
-})
+});
 
-// Tab was closed
-ext.tabs.onClickedClose.addListener(async (event) => {
+ext.tabs.onClickedClose.addListener(async () => {
   try {
-
-    // Remove objects
-    if (event.id === tab?.id) {
-      if (tab !== null) await ext.tabs.remove(tab.id)
-      if (window !== null) await ext.windows.remove(window.id)
-      if (webview !== null) await ext.webviews.remove(webview.id)
-      tab = window = webview = null
-    }
-
+    await destroyInstance();
   } catch (error) {
-
-    // Print error
-    console.error('ext.tabs.onClickedClose', JSON.stringify(error))
-
+    console.log(error, "ext.tabs.onClickedClose");
   }
-})
+});
 
-// Tab was muted
-ext.tabs.onClickedMute.addListener(async (event) => {
+ext.tabs.onRemoved.addListener(async () => {
   try {
-
-    // Update audio
-    if (event.id === tab?.id && tab !== null && webview !== null) {
-      const muted = await ext.webviews.isAudioMuted(webview.id)
-      await ext.webviews.setAudioMuted(webview.id, !muted)
-      await ext.tabs?.update(tab.id, { muted: !muted })
-    }
-
+    await destroyInstance();
   } catch (error) {
-
-    // Print error
-    console.error('ext.tabs.onClickedMute', JSON.stringify(error))
-
+    console.log(error, "ext.tabs.onRemoved");
   }
-})
+});
 
-// Window was removed by another extension
-ext.windows.onRemoved.addListener(async (event) => {
+ext.windows.onClosed.addListener(async () => {
   try {
-
-    // Remove objects
-    if (event.id === window?.id) {
-      if (tab !== null) await ext.tabs.remove(tab.id)
-      if (webview !== null) await ext.webviews.remove(webview.id)
-      tab = window = webview = null
-    }
-
+    await destroyInstance();
   } catch (error) {
-
-    // Print error
-    console.error('ext.windows.onRemoved', JSON.stringify(error))
-
+    console.log(error, "ext.windows.onClosed");
   }
-})
+});
 
-// Window was closed
-ext.windows.onClosed.addListener(async (event) => {
+ext.windows.onRemoved.addListener(async () => {
   try {
-
-    // Remove objects
-    if (event.id === window?.id) {
-      if (tab !== null) await ext.tabs.remove(tab.id)
-      if (webview !== null) await ext.webviews.remove(webview.id)
-      tab = window = webview = null
-    }
-
+    await destroyInstance();
   } catch (error) {
-
-    // Print error
-    console.error('ext.windows.onClosed', JSON.stringify(error))
-
+    console.log(error, "ext.windows.onRemoved");
   }
-})
+});

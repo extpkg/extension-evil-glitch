@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Evil Glitch</title>
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      #frame {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 32px;
+        background-color: transparent;
+        z-index: 2;
+        -webkit-app-region: drag;
+      }
+
+      canvas {
+        cursor: none;
+        display: none;
+      }
+
+      #c {
+        height: 100vh;
+        margin: auto;
+        display: block;
+      }
+
+      #s {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        box-shadow: inset 0 0 50px 30px #000;
+        margin: auto;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="frame"></div>
+
+    <div id="d">
+      <canvas id="c"></canvas>
+      <canvas
+        id="g"
+        moz-opaque
+      ></canvas>
+      <div id="s"></div>
+    </div>
+
+    <script src="./app/index.js"></script>
+    <script type="module">
+      const platformInfo = await ext.runtime.getPlatformInfo();
+      const webview = await ext.webviews.getCurrent();
+      const window = await ext.webviews.getAttachedWindow(webview.id);
+      const insetSize = await ext.windows.getInsetSize(window.id);
+
+      if (platformInfo.os !== "mac" && insetSize) {
+        document.getElementById("frame").style.right = `${insetSize.width}px`;
+      }
+    </script>
+  </body>
+</html>
