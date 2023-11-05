@@ -51,8 +51,6 @@ ext.runtime.onExtensionClick.addListener(async () => {
       center: true,
       title,
       icon: "./assets/128.png",
-      fullscreenable: false,
-      maximizable: false,
       darkMode: true,
       vibrancy: false,
       frame: false,
