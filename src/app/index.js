@@ -2017,8 +2017,8 @@
 
     init();
 
-    buttons[2][3] = "true";
-    buttons[3][3] = "true";
+    buttons[2][3] = true;
+    buttons[3][3] = true;
     buttons[4][3] = godMode;
   }
 
@@ -2133,7 +2133,7 @@
     record = score;
     storage.setItem("record", score);
     buttons[1][3] = true;
-    buttons[2][3] = true;
+    buttons[2][3] = false;
   }
 
   function getRandomValue(value, offset) {
