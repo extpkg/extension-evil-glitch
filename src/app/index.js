@@ -1032,7 +1032,8 @@
 
   s.style.width = c.clientWidth;
   window.addEventListener("resize", () => {
-    s.style.width = c.clientWidth;
+    let rect = c.getBoundingClientRect();
+    s.style.width = rect.width + "px";
   });
 
   // WebGL setup
