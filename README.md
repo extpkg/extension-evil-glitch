@@ -13,3 +13,6 @@ Strange glitches appear in your dimension, can you stop them from assimilating y
 
 Run `npm run dev` to watch `src` and `public` directories and rebuild the
 project on changes
+
+## Source
+https://github.com/agar3s/devil-glitches
